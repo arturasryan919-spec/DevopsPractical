@@ -26,7 +26,7 @@ jobs:
         run: PYTHONPATH=. pytest 
         
       - name: docker build
-        run: docker build -t devops-revision-app:ci .
+        run: docker build -t devops-revision-app:1.0 .
 
 
       - name: docker login
