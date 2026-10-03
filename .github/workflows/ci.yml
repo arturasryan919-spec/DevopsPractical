@@ -28,7 +28,7 @@ jobs:
       - name: docker build
         run: |
           docker build -t arturasryan/devops-revision-app:1.0 .
-          docker tag arturasryan/devops-reivison-app:1.0 arturasryan/devops-revision-app:latest
+          docker tag arturasryan/devops-revisison-app:1.0 arturasryan/devops-revision-app:latest
 
 
       - name: docker login
