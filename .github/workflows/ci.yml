@@ -32,7 +32,6 @@ jobs:
       - name: docker run
         run: |
           docker run -d --name devops-app -p 5000:5000 arturasryan/devops-revision-app:latest
-          sleep 5   
       - name: checking app output
         run: curl localhost:5000/health 
 
@@ -58,7 +57,7 @@ jobs:
         run: |
           docker compose pull
           docker compose up -d
-          sleep 5
+          docker inspect --format='{{.State.Health.Status}}' devopspractical-app-1
 
       - name: checking health app
         run: curl localhost:5000/health
