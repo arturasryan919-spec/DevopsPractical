@@ -1,6 +1,6 @@
 services:
   app:
-    image: devops-revision-app:1.0 
+    image: arturasryan/devops-revision-app:latest 
     ports:
       - "5000:5000"
 

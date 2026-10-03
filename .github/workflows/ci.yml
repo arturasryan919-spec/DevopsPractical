@@ -39,3 +39,13 @@ jobs:
 
       - name: Docker push
         run: docker push arturasryan/devops-revision-app:latest
+
+
+  cd:
+    needs: ci
+    runs-on: self-hosted
+    steps:
+      - name: after ci
+        run: |
+          docker compose pull
+          docker compose up -d
