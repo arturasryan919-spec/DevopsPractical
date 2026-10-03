@@ -45,6 +45,9 @@ jobs:
     needs: ci
     runs-on: self-hosted
     steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
       - name: after ci
         run: |
           docker compose pull
