@@ -57,7 +57,13 @@ jobs:
         run: |
           docker compose pull
           docker compose up -d
-          docker inspect --format='{{.State.Health.Status}}' devopspractical-app-1
 
+      - name: docker healthyy check 
+        run: |
+          while [ "$(docker inspect --format='{{.State.Health.Status}}' devopspractical-app-1)" != "healthy" ]; do
+            echo "Waiting for container to become healthy..."
+            sleep 2
+          done
+          echo "Container is healthy!"
       - name: checking health app
         run: curl localhost:5000/health
