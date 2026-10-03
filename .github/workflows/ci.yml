@@ -36,8 +36,8 @@ jobs:
       - name: waiting healthy status
         run: |
            while [ "$(docker inspect --format='{{.State.Health.Status}}' devops-app)" != "healthy" ]; do
-            echo "Waiting for container to become healthy..."
-            sleep 2
+           echo "Waiting for container to become healthy..."
+           sleep 2
           done
           echo "Container is healthy!"
 
