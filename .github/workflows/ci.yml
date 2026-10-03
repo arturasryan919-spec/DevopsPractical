@@ -29,6 +29,11 @@ jobs:
         run: |
           docker build -t arturasryan/devops-revision-app:1.0 .
           docker tag arturasryan/devops-revision-app:1.0 arturasryan/devops-revision-app:latest
+      - name: docker run
+        run: docker run -d --name devops-app -p 5000:5000 arturasryan/devops-revision-app:latest
+
+      - name: checking app output
+        run: curl localhost:5000/health 
 
 
       - name: docker login
