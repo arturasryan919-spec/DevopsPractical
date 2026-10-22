@@ -1,7 +1,12 @@
 # DevOps Practical · Delivery Lab
 
-[![Pull request CI](https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml/badge.svg?branch=main&event=pull_request)](https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml?query=event%3Apull_request)
-[![Main push pipeline](https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml?query=event%3Apush)
+<p>
+  <img src="https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml/badge.svg?event=pull_request" alt="Pull request CI" />
+  <img src="https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml/badge.svg?branch=main&amp;event=push" alt="Main branch CI" />
+  <img src="https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/deploy.yml/badge.svg?branch=main&amp;event=workflow_run" alt="WSL deployment" />
+</p>
+
+[Pull request runs](https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml?query=event%3Apull_request) · [Main CI runs](https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml?query=branch%3Amain+event%3Apush) · [Deployment runs](https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/deploy.yml?query=event%3Aworkflow_run)
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
 ![Docker](https://img.shields.io/badge/Container-Docker-2496ED?logo=docker&logoColor=white)
 
@@ -29,9 +34,7 @@ flowchart LR
     COMPOSE --> HEALTH["Container health + HTTP probe"]
 ```
 
-The publish and deploy steps run only for a push to `main`. Pull requests run the tests and build the image without using Docker Hub credentials or the self-hosted runner.
-
-The **Pull request CI** badge tracks the checks that run for pull requests. The **Main push pipeline** badge tracks publishing and deployment too, so its status depends on the self-hosted runner being online.
+Pull requests run tests and build the image on GitHub-hosted runners. A push to `main` runs the same checks, publishes the image, and then starts the separate deployment workflow. The deployment badge tracks the WSL runner independently, so an offline runner cannot make the CI badge look failed.
 
 ## Run locally
 
@@ -69,13 +72,13 @@ PYTHONPATH=. python -m pytest
 
 ## CI/CD setup
 
-The workflow in [`.github/workflows/ci.yml`](.github/workflows/ci.yml) expects:
+The workflows in [`.github/workflows/ci.yml`](.github/workflows/ci.yml) and [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) expect:
 
-1. GitHub Actions repository secrets `DOCKER_USERNAME` and `DOCKER_PASSWORD`. Use a Docker Hub access token for the password.
-2. A self-hosted GitHub Actions runner with the `self-hosted` label, Docker Engine, and the Docker Compose plugin.
+1. GitHub Actions repository secrets `DOCKER_USERNAME` and `DOCKER_PASSWORD` for publishing to Docker Hub. Use a Docker Hub access token for the password.
+2. A self-hosted GitHub Actions runner with the `self-hosted` label, Docker Engine, and the Docker Compose plugin for deployment.
 3. Port `5000` available on the deployment host.
 
-Pull request jobs run on GitHub-hosted runners. The self-hosted runner is used only after CI passes on a push to `main`. Keep that runner restricted to this trusted repository.
+Pull request checks and main-branch CI run on GitHub-hosted runners. The deployment workflow starts only after a successful push CI run on `main`. Keep the self-hosted runner restricted to this trusted repository.
 
 ### Start the self-hosted runner in WSL
 
