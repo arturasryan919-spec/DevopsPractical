@@ -7,6 +7,7 @@
 </p>
 
 [Pull request runs](https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml?query=event%3Apull_request) · [Main CI runs](https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml?query=branch%3Amain+event%3Apush) · [Deployment runs](https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/deploy.yml?query=event%3Aworkflow_run)
+
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
 ![Docker](https://img.shields.io/badge/Container-Docker-2496ED?logo=docker&logoColor=white)
 
@@ -28,8 +29,9 @@ flowchart LR
     PR["Pull request to main"] --> CI["GitHub-hosted CI"]
     CI --> TEST["pytest"]
     TEST --> BUILD["Docker build"]
-    BUILD -->|merge to main| HUB["Publish commit tag + latest"]
-    HUB --> RUNNER["Self-hosted runner"]
+    BUILD -->|push to main| HUB["Publish commit tag + latest"]
+    HUB --> DEPLOY["Deployment workflow"]
+    DEPLOY --> RUNNER["Self-hosted WSL runner"]
     RUNNER --> COMPOSE["Docker Compose deploy"]
     COMPOSE --> HEALTH["Container health + HTTP probe"]
 ```
