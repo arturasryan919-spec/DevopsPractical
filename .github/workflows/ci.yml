@@ -1,4 +1,4 @@
-name: DevOps Lab CI/CD
+name: DevOps Lab CI
 
 on:
   push:
@@ -49,50 +49,3 @@ jobs:
         run: |
           docker push "arturasryan/devops-revision-app:${GITHUB_SHA}"
           docker push arturasryan/devops-revision-app:latest
-
-  deploy:
-    name: Deploy to lab server
-    needs: ci
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    runs-on: self-hosted
-    timeout-minutes: 10
-    steps:
-      - name: Check out deployment configuration
-        uses: actions/checkout@v4
-
-      - name: Pull and restart the service
-        run: |
-          docker compose pull app
-          APP_ENV=production APP_VERSION="$(git rev-parse --short=7 HEAD)" \
-            docker compose up -d --remove-orphans app
-
-      - name: Wait for container health
-        shell: bash
-        run: |
-          status="starting"
-          for attempt in {1..30}; do
-            container_id="$(docker compose ps -q app)"
-            if [ -n "$container_id" ]; then
-              status="$(docker inspect --format='{{.State.Health.Status}}' "$container_id" 2>/dev/null || true)"
-            fi
-
-            case "$status" in
-              healthy)
-                break
-                ;;
-              unhealthy)
-                docker compose logs --tail=100 app
-                exit 1
-                ;;
-            esac
-
-            sleep 2
-          done
-
-          if [ "$status" != "healthy" ]; then
-            docker compose logs --tail=100 app
-            echo "Service did not become healthy (last status: $status)."
-            exit 1
-          fi
-
-          docker compose exec -T app python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/health', timeout=3)"
