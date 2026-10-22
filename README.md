@@ -1,9 +1,8 @@
 # DevOps Practical · Delivery Lab
 
 <p>
-  <img src="https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml/badge.svg?event=pull_request" alt="Pull request CI" />
-  <img src="https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml/badge.svg?branch=main&amp;event=push" alt="Main branch CI" />
-  <img src="https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/deploy.yml/badge.svg?branch=main&amp;event=workflow_run" alt="WSL deployment" />
+  <a href="https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml?query=event%3Apull_request"><img src="https://img.shields.io/github/actions/workflow/status/arturasryan919-spec/DevopsPractical/ci.yml?event=pull_request&amp;label=PR%20CI" alt="PR CI" /></a>
+  <a href="https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml?query=branch%3Amain+event%3Apush"><img src="https://img.shields.io/github/actions/workflow/status/arturasryan919-spec/DevopsPractical/ci.yml?branch=main&amp;event=push&amp;label=Main%20CI" alt="Main CI" /></a>
 </p>
 
 [Pull request runs](https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml?query=event%3Apull_request) · [Main CI runs](https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml?query=branch%3Amain+event%3Apush) · [Deployment runs](https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/deploy.yml?query=event%3Aworkflow_run)
@@ -36,7 +35,7 @@ flowchart LR
     COMPOSE --> HEALTH["Container health + HTTP probe"]
 ```
 
-Pull requests run tests and build the image on GitHub-hosted runners. A push to `main` runs the same checks, publishes the image, and then starts the separate deployment workflow. The deployment badge tracks the WSL runner independently, so an offline runner cannot make the CI badge look failed.
+Pull requests run tests and build the image on GitHub-hosted runners. A push to `main` runs the same checks, publishes the image, and then starts the separate deployment workflow. The deployment workflow runs independently, so an offline WSL runner cannot make CI fail; deployment waits until the runner is online.
 
 ## Run locally
 
