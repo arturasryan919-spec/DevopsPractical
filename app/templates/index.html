@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A hands-on DevOps lab demonstrating a tested, containerized Flask service and delivery workflow.">
+    <meta name="theme-color" content="#09111f">
+    <title>{{ app_name }} · Delivery Lab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <div class="page-shell" id="top">
+      <header class="site-header">
+        <a class="brand" href="/" aria-label="DevOps Delivery Lab home">
+          <span class="brand-mark" aria-hidden="true">D</span>
+          <span class="brand-copy">
+            <strong>DEVOPS LAB</strong>
+            <small>PERSONAL PROJECT</small>
+          </span>
+        </a>
+        <nav class="main-nav" aria-label="Main navigation">
+          <a href="#delivery">Delivery flow</a>
+          <a href="#operations">Operations</a>
+          <a class="nav-link-status" href="/health"><span class="tiny-dot" aria-hidden="true"></span>Service health</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="eyebrow-line"></span> A HANDS-ON DELIVERY PROJECT</p>
+            <h1 id="hero-title">From commit<br>to <span>healthy container.</span></h1>
+            <p class="hero-intro">
+              A small Flask service built to practice the full delivery loop:
+              automated checks, Docker image publishing and a self-hosted deployment.
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#delivery">Explore the delivery flow <span aria-hidden="true">↗</span></a>
+              <a class="button button-secondary" href="/api/status">View service status <span aria-hidden="true">↗</span></a>
+            </div>
+            <div class="stack-line">
+              <span>BUILT WITH</span>
+              <b>Python</b><i></i><b>Flask</b><i></i><b>Docker</b><i></i><b>GitHub Actions</b>
+            </div>
+          </div>
+
+          <aside class="service-card" aria-label="Current service details">
+            <div class="card-topline">
+              <span class="card-label">APPLICATION STATUS</span>
+              <span class="live-indicator"><span class="live-pulse"></span> RESPONDING</span>
+            </div>
+            <div class="status-visual" aria-hidden="true">
+              <div class="status-ring ring-outer"></div>
+              <div class="status-ring ring-middle"></div>
+              <div class="status-core"><span>✓</span></div>
+            </div>
+            <h2>Service is online</h2>
+            <p class="card-description">This page is served by the Flask application running in this environment.</p>
+            <div class="card-divider"></div>
+            <dl class="runtime-details">
+              <div>
+                <dt>ENVIRONMENT</dt>
+                <dd>{{ app_env }}</dd>
+              </div>
+              <div>
+                <dt>RELEASE</dt>
+                <dd>{{ app_version }}</dd>
+              </div>
+              <div>
+                <dt>HEALTH PROBE</dt>
+                <dd><a href="/health">/health <span aria-hidden="true">↗</span></a></dd>
+              </div>
+            </dl>
+          </aside>
+        </section>
+
+        <section class="delivery-section" id="delivery" aria-labelledby="delivery-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow"><span class="eyebrow-line"></span> THE DELIVERY LOOP</p>
+              <h2 id="delivery-title">A clear path to production.</h2>
+            </div>
+            <p class="section-note">Every change has a route from review to a running service.</p>
+          </div>
+
+          <div class="flow-grid">
+            <article class="flow-card">
+              <div class="flow-card-top"><span class="step-number">01</span><span class="step-tag">SOURCE</span></div>
+              <div class="flow-icon icon-branch" aria-hidden="true"><span></span><span></span><span></span></div>
+              <h3>Review the change</h3>
+              <p>Changes arrive through a pull request targeting <code>main</code>.</p>
+              <span class="flow-connector" aria-hidden="true">→</span>
+            </article>
+            <article class="flow-card">
+              <div class="flow-card-top"><span class="step-number">02</span><span class="step-tag">VERIFY</span></div>
+              <div class="flow-icon icon-check" aria-hidden="true"><span>✓</span></div>
+              <h3>Run the checks</h3>
+              <p>GitHub-hosted CI runs pytest and confirms the Docker image builds.</p>
+              <span class="flow-connector" aria-hidden="true">→</span>
+            </article>
+            <article class="flow-card">
+              <div class="flow-card-top"><span class="step-number">03</span><span class="step-tag">PUBLISH</span></div>
+              <div class="flow-icon icon-cube" aria-hidden="true"><span></span></div>
+              <h3>Publish the image</h3>
+              <p>A passing change on <code>main</code> publishes a commit-tagged image to Docker Hub.</p>
+              <span class="flow-connector" aria-hidden="true">→</span>
+            </article>
+            <article class="flow-card">
+              <div class="flow-card-top"><span class="step-number">04</span><span class="step-tag">OPERATE</span></div>
+              <div class="flow-icon icon-pulse" aria-hidden="true"><span>⌁</span></div>
+              <h3>Deploy and verify</h3>
+              <p>A self-hosted runner updates Compose and waits for the container health check.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="operations-section" id="operations" aria-labelledby="operations-title">
+          <div class="operations-copy">
+            <p class="eyebrow"><span class="eyebrow-line"></span> BUILT TO BE OBSERVED</p>
+            <h2 id="operations-title">Small service.<br><span>Real delivery concerns.</span></h2>
+            <p>
+              The application stays intentionally focused so the engineering around it is easy to inspect:
+              repeatable container builds, environment-aware configuration and a health signal for deployment.
+            </p>
+          </div>
+          <div class="endpoint-panel">
+            <div class="endpoint-panel-heading">
+              <span class="terminal-mark" aria-hidden="true">›_</span>
+              <div><strong>Service endpoints</strong><small>TRY THEM IN YOUR BROWSER</small></div>
+            </div>
+            <a class="endpoint-row" href="/health">
+              <span class="method">GET</span><span class="endpoint-path">/health</span><span class="endpoint-purpose">Container health probe</span><span class="endpoint-arrow" aria-hidden="true">↗</span>
+            </a>
+            <a class="endpoint-row" href="/api/status">
+              <span class="method">GET</span><span class="endpoint-path">/api/status</span><span class="endpoint-purpose">Runtime details as JSON</span><span class="endpoint-arrow" aria-hidden="true">↗</span>
+            </a>
+            <div class="endpoint-footnote"><span class="tiny-dot" aria-hidden="true"></span> JSON responses are available without authentication.</div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <a class="brand footer-brand" href="/" aria-label="Back to top">
+          <span class="brand-mark" aria-hidden="true">D</span>
+          <span class="brand-copy"><strong>DEVOPS LAB</strong><small>LEARN · BUILD · SHIP</small></span>
+        </a>
+        <p>A personal lab for practicing reliable software delivery.</p>
+        <a class="footer-top" href="#top">BACK TO TOP ↑</a>
+      </footer>
+    </div>
+  </body>
+</html>
