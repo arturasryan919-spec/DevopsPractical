@@ -1,8 +1,12 @@
 services:
   app:
-    image: arturasryan/devops-revision-app:latest 
+    image: arturasryan/devops-revision-app:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
     ports:
-      - "5000:5000"
-
+      - "${APP_PORT:-5000}:5000"
     environment:
-      - APP_ENV=production 
+      APP_ENV: "${APP_ENV:-production}"
+      APP_VERSION: "${APP_VERSION:-dev}"
