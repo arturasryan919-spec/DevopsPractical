@@ -1,7 +1,7 @@
 # DevOps Practical · Delivery Lab
 
-[![Pull request CI](https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml/badge.svg?branch=main&event=pull_request)](https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml?query=event%3Apull_request)
-[![Main push pipeline](https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml?query=event%3Apush)
+![Pull request CI](https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml/badge.svg?branch=main&event=pull_request)
+![Main push pipeline](https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml/badge.svg?branch=main&event=push)
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
 ![Docker](https://img.shields.io/badge/Container-Docker-2496ED?logo=docker&logoColor=white)
 
@@ -31,7 +31,7 @@ flowchart LR
 
 The publish and deploy steps run only for a push to `main`. Pull requests run the tests and build the image without using Docker Hub credentials or the self-hosted runner.
 
-The **Pull request CI** badge tracks the checks that run for pull requests. The **Main push pipeline** badge tracks publishing and deployment too, so its status depends on the self-hosted runner being online.
+The **Pull request CI** badge tracks the checks that run for pull requests. The **Main push pipeline** badge tracks publishing and deployment too, so its status depends on the self-hosted runner being online. See the [pull request CI runs](https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml?query=event%3Apull_request) or [main push runs](https://github.com/arturasryan919-spec/DevopsPractical/actions/workflows/ci.yml?query=event%3Apush).
 
 ## Run locally
 
